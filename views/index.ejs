@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <%- include('header')%>
+    <div class="messages-container">
+        <ul>
+            <% messages.forEach((message)=>{ %>
+                <li><h3><%= message.text %></h3>
+                    <span>By: <%= message.user %> at <%= message.added %></span>
+                    <a href="/<%= message.id%>"><button>Open</button></a>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+    <div class="new-message-btn">
+        <a href="/new">
+            <button>Create a New Message</button>
+        </a>
+    </div>
+    <%- include('footer')%>
+</body>
+</html>
