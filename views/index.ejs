@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message Board</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <%- include('header')%>
@@ -12,8 +12,13 @@
         <ul>
             <% messages.forEach((message)=>{ %>
                 <li><h3><%= message.text %></h3>
-                    <span>By: <%= message.user %> at <%= message.added %></span>
-                    <a href="/<%= message.id%>"><button>Open</button></a>
+                    <span>By: <%= message.username %> at <%= message.added %></span>
+                    <div class="buttons">
+                        <a href="/message/<%= message.id%>"><button>Open</button></a>
+                        <form action="/delete/<%= message.id%>" method="POST">
+                            <button class="delete" type="submit">Delete</button>
+                        </form>
+                    </div>
                 </li>
             <% }) %>
         </ul>

@@ -156,3 +156,12 @@ footer a:hover {
 .form-container .back-button:hover {
     background-color: #e53935;
 }
+
+.buttons{
+    display: flex;
+    gap: 10px;
+}
+
+.delete{
+    background-color: #e53935;
+}

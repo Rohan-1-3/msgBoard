@@ -1,28 +1,30 @@
-const messages = [
-  {
-    id: '1',
-    text: "Hi there!",
-    user: "Amando",
-    added: (new Date()).toLocaleDateString()
-  },
-  {
-    id: '2',
-    text: "Hello World!",
-    user: "Charles",
-    added: (new Date()).toLocaleDateString()
-  }
-];
+import expressAsyncHandler from "express-async-handler";
+import { v4 as uuidv4 } from "uuid";
+import { addNewMessage, deleteMessage, getAllMessages, getMessage } from "../db/queries.js";
 
-export const getAllMessages = ()=>{
-    return messages; 
-} 
+export const messagesGet = expressAsyncHandler(async(req, res)=>{
+  const messages = await  getAllMessages();
+  res.status(200).render("index",{
+    messages: messages
+  });
+})
 
-export const getMessageById = (id)=>{
-    const message = messages.find(message => message.id === id);
-    return message;
+export const newFormGet = (req, res)=>{
+  res.render('newForm');
 }
 
-export const addNewMessage = (message)=>{
-    messages.push(message);
-    return;
-}
+export const newFormPost = expressAsyncHandler(async (req, res)=>{
+  const message = await {...req.body, id: uuidv4()}
+  await addNewMessage(message);
+  res.redirect("/")
+})
+
+export const messageGet = expressAsyncHandler(async (req, res)=>{
+    const message = await getMessage(req.params.messageId);
+    res.status(200).render('message', {message: message});
+})
+
+export const messageDelete = expressAsyncHandler(async (req, res)=>{
+  await deleteMessage(req.params.messageId);
+  res.redirect("/")
+})

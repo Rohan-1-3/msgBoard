@@ -1,17 +1,10 @@
 import { Router } from "express";
-import { v4 as uuidv4 } from 'uuid';
-import { addNewMessage } from "../controllers/indexController.js";
+import {  newFormGet, newFormPost } from "../controllers/indexController.js";
 
 const newMessageRouter = new Router();
 
-newMessageRouter.get("/", (req, res)=>{
-    res.render('newForm');
-});
+newMessageRouter.get("/", newFormGet);
 
-newMessageRouter.post("/", (req, res)=>{
-    const message = {...req.body, added: (new Date()).toLocaleDateString(), id: uuidv4()}
-    addNewMessage(message);
-    res.redirect("/")
-})
+newMessageRouter.post("/", newFormPost)
 
 export { newMessageRouter };
